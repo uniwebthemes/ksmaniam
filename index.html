@@ -11,7 +11,8 @@
 
     <!-- Main structural elements can go here (e.g., <header>, <main>, <footer>) -->
     <h1>Hello, world!</h1>
-
+    <div id="slides">
+    </div>
     <!-- Link to your external JavaScript file -->
     <script>
       const url =
@@ -26,6 +27,22 @@ fetch(url)
 
     console.log(json.table.rows);
   });
+
+        const presentationId = "15cqcc0AgUxtKWXWauhxvFoODSdgWbXdvLRhbgNPWeok";
+const slideCount = 5;
+
+const container = document.getElementById("slides");
+
+for (let i = 1; i <= slideCount; i++) {
+  const img = document.createElement("img");
+
+  img.src =
+    `https://docs.google.com/presentation/d/e/${presentationId}/embed?slide=id.g${i}`;
+
+  img.alt = `Slide ${i}`;
+
+  container.appendChild(img);
+}
     </script>
 </body>
 </html>
