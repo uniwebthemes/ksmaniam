@@ -13,6 +13,26 @@
     <h1>Hello, world!</h1>
     <div id="slides">
     </div>
+
+    <div>
+  <h2>Students</h2>
+  <div id="students">Loading...</div>
+</div>
+
+<div>
+  <h2>Attendance</h2>
+  <div id="attendance">Loading...</div>
+</div>
+
+<div>
+  <h2>Enquiries</h2>
+  <div id="enquiries">Loading...</div>
+</div>
+
+<div>
+  <h2>Admissions</h2>
+  <div id="admissions">Loading...</div>
+</div>
     <!-- Link to your external JavaScript file -->
     <script>
       const url =
@@ -28,22 +48,33 @@ fetch(url)
     console.log(json.table.rows);
       alert(json.table.rows);
   });
+const API_URL =
+  "https://script.google.com/macros/s/AKfycbzNf8Kae5MUdkG2ePjRyIZEuYHuuUlDU2fRxvmVe_3JerdTQtMHhimdOpz4TLdZdborCQ/exec";
 
-        const presentationId = "15cqcc0AgUxtKWXWauhxvFoODSdgWbXdvLRhbgNPWeok";
-const slideCount = 5;
+async function loadDashboard() {
+  try {
+    const response = await fetch(API_URL);
 
-const container = document.getElementById("slides");
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
 
-for (let i = 1; i <= slideCount; i++) {
-  const img = document.createElement("img");
+    const data = await response.json();
 
-  img.src =
-    `https://docs.google.com/presentation/d/e/${presentationId}/embed?slide=id.g${i}`;
+    console.log(data);
 
-  img.alt = `Slide ${i}`;
+    document.querySelector("#students").textContent = data.students;
+    document.querySelector("#attendance").textContent =
+      `${data.attendance}%`;
+    document.querySelector("#enquiries").textContent = data.enquiries;
+    document.querySelector("#admissions").textContent = data.admissions;
 
-  container.appendChild(img);
+  } catch (error) {
+    console.error("Dashboard API error:", error);
+  }
 }
+
+loadDashboard();
     </script>
 </body>
 </html>
